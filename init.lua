@@ -8,9 +8,15 @@ require("nvim-tree").setup({
   view = {
     side = "right",
   },
+  renderer = {
+    highlight_diagnostics = "all",
+  },
+  diagnostics = {
+    enable = true
+  }
 })
 
-require("insx.preset.standard").setup()
+require("nvim-ts-autotag").setup({})
 
 vim.wo.number = true
 vim.wo.relativenumber = true

@@ -39,8 +39,4 @@ return {
       })
     end,
   },
-
-  {
-    "hrsh7th/nvim-insx",
-  },
 }
