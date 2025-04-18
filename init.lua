@@ -12,11 +12,13 @@ require("nvim-tree").setup({
     highlight_diagnostics = "all",
   },
   diagnostics = {
-    enable = true
-  }
+    enable = true,
+  },
 })
 
 require("nvim-ts-autotag").setup({})
+
+require("gitsigns").setup()
 
 vim.wo.number = true
 vim.wo.relativenumber = true
@@ -29,3 +31,29 @@ vim.opt.grepformat = "%f:%l:%c:%m"
 
 vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, { noremap = true })
 vim.keymap.set("n", "<leader><F2>", vim.lsp.buf.rename, { noremap = true })
+
+vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
+vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
+vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
+vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+augroup("OpenQuickFix", { clear = true })
+autocmd("FileType", {
+  group = "OpenQuickFix",
+  pattern = "qf",
+  command = "wincmd H",
+})
+
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  sources = {
+    null_ls.builtins.completion.spell,
+    null_ls.builtins.diagnostics.cppcheck,
+    null_ls.builtins.diagnostics.credo,
+    null_ls.builtins.diagnostics.pylint,
+  },
+})

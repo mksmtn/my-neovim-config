@@ -7,4 +7,8 @@ return {
       "ibhagwan/fzf-lua", -- optional
     },
   },
+
+  {
+    "lewis6991/gitsigns.nvim",
+  },
 }
