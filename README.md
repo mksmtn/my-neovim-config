@@ -1,9 +1,10 @@
-pip install basedpyright
+## Installation
 
-https://github.com/elixir-lsp/elixir-ls/releases
+See files in [lsp servers](./lsp/) for how to install each.
 
-npm install -g typescript-language-server typescript
-npm install -g @angular/language-server
-
+```bash
 brew install stylua
 brew install ripgrep
+```
+
+You may also need Mix for Elixir and Prettier for formatting.

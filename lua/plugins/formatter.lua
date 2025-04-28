@@ -11,6 +11,7 @@ return {
           typescript = formatter_prettier,
           typescriptreact = formatter_prettier,
           html = formatter_prettier,
+          htmlangular = formatter_prettier,
           lua = { require("formatter.filetypes.lua").stylua },
           elixir = formatter_mix,
           eelixir = formatter_mix,

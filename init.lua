@@ -1,59 +1,57 @@
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- Install Lazy
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-require("config.lazy")
-require("kanagawa").load("wave")
+require("settings")
+require("keymaps")
+require("autocmds")
+require("lsp")
 
-require("nvim-tree").setup({
-  view = {
-    side = "right",
+require("lazy").setup({
+  spec = {
+    { import = "plugins" },
   },
-  renderer = {
-    highlight_diagnostics = "all",
+  install = { colorscheme = { "kanagawa" } },
+  checker = {
+    enabled = true, -- check for plugin updates periodically
+    notify = false, -- notify on update
+  }, -- automatically check for plugin updates
+  rocks = {
+    enabled = false,
   },
-  diagnostics = {
-    enable = true,
-  },
-})
-
-require("nvim-ts-autotag").setup({})
-
-require("gitsigns").setup()
-
-vim.wo.number = true
-vim.wo.relativenumber = true
-
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-
-vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
-vim.opt.grepformat = "%f:%l:%c:%m"
-
-vim.keymap.set("n", "<leader>.", vim.lsp.buf.code_action, { noremap = true })
-vim.keymap.set("n", "<leader><F2>", vim.lsp.buf.rename, { noremap = true })
-
-vim.keymap.set("n", "<c-k>", ":wincmd k<CR>")
-vim.keymap.set("n", "<c-j>", ":wincmd j<CR>")
-vim.keymap.set("n", "<c-h>", ":wincmd h<CR>")
-vim.keymap.set("n", "<c-l>", ":wincmd l<CR>")
-
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-
-augroup("OpenQuickFix", { clear = true })
-autocmd("FileType", {
-  group = "OpenQuickFix",
-  pattern = "qf",
-  command = "wincmd H",
-})
-
-local null_ls = require("null-ls")
-
-null_ls.setup({
-  sources = {
-    null_ls.builtins.completion.spell,
-    null_ls.builtins.diagnostics.cppcheck,
-    null_ls.builtins.diagnostics.credo,
-    null_ls.builtins.diagnostics.pylint,
+  -- Don't bother me when tweaking plugins.
+  change_detection = { notify = false },
+  performance = {
+    rtp = {
+      -- Stuff I don't use.
+      disabled_plugins = {
+        "gzip",
+        "netrwPlugin",
+        "rplugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
   },
 })
+
+require("kanagawa").setup({
+  theme = "wave"
+})
+
+vim.cmd("colorscheme kanagawa")
+
+require("nvim-tree").setup()
+
