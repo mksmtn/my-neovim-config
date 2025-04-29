@@ -48,10 +48,10 @@ require("lazy").setup({
 })
 
 require("kanagawa").setup({
-  theme = "wave"
+  theme = "wave",
 })
 
 vim.cmd("colorscheme kanagawa")
 
-require("nvim-tree").setup()
-
+--require("nvim-tree").setup()
+require("mini.files").setup()
